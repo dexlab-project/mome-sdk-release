@@ -1,4 +1,4 @@
-name: Deploy Packages
+name: Deploy to npmjs
 
 on:
   release:
@@ -24,7 +24,7 @@ jobs:
         with:
           node-version: '18'
           cache: 'yarn'
-          registry-url: https://npm.pkg.github.com/
+          registry-url: https://registry.npmjs.org/
 
       - name: tarball
         run: yarn pack
@@ -35,6 +35,6 @@ jobs:
 
       - name: publish
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.PACKAGES_TOKEN }}
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_PACKAGES_TOKEN }}
         run: yarn publish ${{ env.TARBALL }}
 
