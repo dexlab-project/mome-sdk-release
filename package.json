@@ -20,7 +20,7 @@
     "solana",
     "meme"
   ],
-  "license": "ISC",
+  "license": "MIT",
   "devDependencies": {
     "@types/bn.js": "^5.1.5",
     "@types/jest": "^29.5.12",
