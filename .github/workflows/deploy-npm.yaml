@@ -36,5 +36,5 @@ jobs:
       - name: publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_PACKAGES_TOKEN }}
-        run: yarn publish ${{ env.TARBALL }}
+        run: yarn publish ${{ env.TARBALL }} --access public
 
