@@ -1,6 +1,6 @@
 {
   "name": "@dexlab-project/mome-sdk",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
@@ -10,7 +10,10 @@
     "lint": "eslint 'src/**/*.{js,ts}'",
     "format": "prettier --write 'src/**/*.{js,ts,json,md}'"
   },
-  "repository": "git@github.com:@dexlab-project/mome-sdk-release",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dexlab-project/mome-sdk-release.git"
+  },
   "author": "dev@dexlab.space",
   "keywords": [
     "mome",
