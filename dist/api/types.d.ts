@@ -1,5 +1,9 @@
 export type TokenListOrder = 'asc' | 'desc';
 export type TokenListSort = 'createdAt' | 'lastCommentedAt' | 'marketCap';
+export interface MomeResponse<T> {
+    data?: T;
+    error?: any;
+}
 export interface TokenResponse {
     tokenAddress: string;
     symbol: string;
