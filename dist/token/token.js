@@ -13,6 +13,7 @@ const decimal_js_1 = __importDefault(require("decimal.js"));
 const mpl_token_metadata_1 = require("@metaplex-foundation/mpl-token-metadata");
 const umi_bundle_defaults_1 = require("@metaplex-foundation/umi-bundle-defaults");
 const axios_1 = __importDefault(require("axios"));
+const util_2 = require("../util");
 class Token {
     constructor(address, program) {
         this.program = program;
@@ -50,8 +51,8 @@ class Token {
     }
     async getCurrentPrice(commitment) {
         const curveAccount = await this.getCurveAccount(commitment);
-        const vReserveSolAmount = (0, util_1.lamportsToSol)(curveAccount.vReserveSolAmount);
-        const vReserveTokenAmount = (0, util_1.toUiVolume)(curveAccount.vReserveTokenAmount, curveAccount.decimals);
+        const vReserveSolAmount = (0, util_2.lamportsToSol)(curveAccount.vReserveSolAmount);
+        const vReserveTokenAmount = (0, util_2.toUiVolume)(curveAccount.vReserveTokenAmount, curveAccount.decimals);
         let price;
         if (vReserveSolAmount.eq(0) || vReserveTokenAmount.eq(0)) {
             price = new decimal_js_1.default(0);

@@ -19,3 +19,4 @@ __exportStar(require("./token"), exports);
 __exportStar(require("./trade"), exports);
 __exportStar(require("./mome"), exports);
 __exportStar(require("./api"), exports);
+__exportStar(require("./event"), exports);

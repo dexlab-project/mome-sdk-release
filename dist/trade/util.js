@@ -3,8 +3,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.calculateCurve = exports.toContractEnum = exports.toRawTradeParam = void 0;
+exports.calculateCurve = exports.toRawTradeParam = void 0;
 const bn_js_1 = __importDefault(require("bn.js"));
+const util_1 = require("../util");
 const toRawTradeParam = (curveAccount, tradeType, tradeParam) => {
     let amount;
     let collateralAmount;
@@ -22,19 +23,13 @@ const toRawTradeParam = (curveAccount, tradeType, tradeParam) => {
         throw new Error(`Invalid trade type: ${tradeType}`);
     }
     return {
-        tradeType: (0, exports.toContractEnum)(tradeType),
+        tradeType: (0, util_1.toContractEnum)(tradeType),
         amount: new bn_js_1.default(amount.toString()),
         collateralAmount: new bn_js_1.default(collateralAmount.toString()),
         slippageBps: new bn_js_1.default(tradeParam.slippageBps),
     };
 };
 exports.toRawTradeParam = toRawTradeParam;
-const toContractEnum = (value) => {
-    return {
-        [value]: {},
-    };
-};
-exports.toContractEnum = toContractEnum;
 const calculateCurve = (amount, solReserveAmount, tokenReserveAmount, tradeType, slippageBps) => {
     let expectedAmount = BigInt(0);
     let expectedUiAmount = '0';

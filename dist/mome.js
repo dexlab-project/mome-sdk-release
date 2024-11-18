@@ -34,6 +34,7 @@ const web3_js_1 = require("@solana/web3.js");
 const nodewallet_1 = __importDefault(require("@coral-xyz/anchor/dist/cjs/nodewallet"));
 const fs = __importStar(require("node:fs"));
 const spl_token_1 = require("@solana/spl-token");
+const listener_1 = require("./event/listener");
 class MomeSDK {
     constructor(provider) {
         this.program = new anchor_1.Program(program_1.IDL, program_1.PROGRAM_ID, provider);
@@ -49,6 +50,9 @@ class MomeSDK {
             commitment: 'confirmed',
         });
         return new MomeSDK(provider);
+    }
+    createNewListener(options) {
+        return new listener_1.MomeEventListener(this.program, options);
     }
     getToken(address) {
         return new token_1.Token(address, this.program);

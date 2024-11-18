@@ -4,4 +4,5 @@ export declare const CURVE_SEED = "mome:curve-account";
 export declare const EVENT_AUTHORITY_SEED = "__event_authority";
 export declare const PROGRAM_ID: PublicKey;
 export * from './mome-idl';
+export * from './types';
 //# sourceMappingURL=index.d.ts.map

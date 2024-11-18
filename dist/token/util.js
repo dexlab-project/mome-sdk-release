@@ -1,89 +1,15 @@
 "use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.TOKEN_METADATA_PROGRAM_ID = exports.toDecimalVolume = exports.toUiVolume = exports.solToLamports = exports.lamportsToSol = exports.getContractEnumValue = exports.convertPublicKeyToSting = exports.convertBNtoBigInt = exports.convertRawCurveAccountNormal = void 0;
-const bn_js_1 = __importDefault(require("bn.js"));
+exports.convertRawCurveAccountNormal = exports.TOKEN_METADATA_PROGRAM_ID = void 0;
 const web3_js_1 = require("@solana/web3.js");
-const types_1 = require("./types");
-const decimal_js_1 = __importDefault(require("decimal.js"));
+const util_1 = require("../util");
+exports.TOKEN_METADATA_PROGRAM_ID = new web3_js_1.PublicKey('metaqbxxUerdq28cj1RbAWkYQm3ybzjb6a8bt518x1s');
 const convertRawCurveAccountNormal = (raw) => {
-    const converted1 = (0, exports.convertBNtoBigInt)(raw);
-    const converted2 = (0, exports.convertPublicKeyToSting)(converted1);
+    const converted1 = (0, util_1.convertBNtoBigInt)(raw);
     return {
-        ...converted2,
-        curveType: (0, exports.getContractEnumValue)(converted2.curveType),
-        curveStatus: (0, exports.getContractEnumValue)(converted2.curveStatus),
+        ...converted1,
+        curveType: (0, util_1.getContractEnumValue)(converted1.curveType),
+        curveStatus: (0, util_1.getContractEnumValue)(converted1.curveStatus),
     };
 };
 exports.convertRawCurveAccountNormal = convertRawCurveAccountNormal;
-const convertBNtoBigInt = (obj) => {
-    const newObj = {};
-    for (const key in obj) {
-        if (obj.hasOwnProperty(key)) {
-            if (obj[key] instanceof bn_js_1.default) {
-                newObj[key] = BigInt(obj[key].toString());
-            }
-            else {
-                newObj[key] = obj[key];
-            }
-        }
-    }
-    return newObj;
-};
-exports.convertBNtoBigInt = convertBNtoBigInt;
-const convertPublicKeyToSting = (obj) => {
-    const newObj = {};
-    for (const key in obj) {
-        if (obj.hasOwnProperty(key)) {
-            if (obj[key] instanceof web3_js_1.PublicKey) {
-                newObj[key] = obj[key].toString();
-            }
-            else {
-                newObj[key] = obj[key];
-            }
-        }
-    }
-    return newObj;
-};
-exports.convertPublicKeyToSting = convertPublicKeyToSting;
-const getContractEnumValue = (contractEnum) => {
-    const value = Object.keys(contractEnum)[0];
-    if (!value) {
-        throw new Error('Invalid contract enum');
-    }
-    return value;
-};
-exports.getContractEnumValue = getContractEnumValue;
-const lamportsToSol = (lamports) => {
-    return (0, exports.toUiVolume)(lamports, types_1.SOLANA_DECIMALS);
-};
-exports.lamportsToSol = lamportsToSol;
-const solToLamports = (sol) => {
-    return (0, exports.toDecimalVolume)(sol, types_1.SOLANA_DECIMALS);
-};
-exports.solToLamports = solToLamports;
-const toUiVolume = (volume, decimal) => {
-    let v;
-    if (volume instanceof decimal_js_1.default) {
-        v = volume;
-    }
-    else {
-        v = new decimal_js_1.default(volume.toString());
-    }
-    return v.div(10 ** decimal).toDecimalPlaces(decimal);
-};
-exports.toUiVolume = toUiVolume;
-const toDecimalVolume = (displayVolume, decimal) => {
-    let v;
-    if (displayVolume instanceof decimal_js_1.default) {
-        v = displayVolume;
-    }
-    else {
-        v = new decimal_js_1.default(displayVolume.toString());
-    }
-    return BigInt(v.times(10 ** decimal).round().toString());
-};
-exports.toDecimalVolume = toDecimalVolume;
-exports.TOKEN_METADATA_PROGRAM_ID = new web3_js_1.PublicKey('metaqbxxUerdq28cj1RbAWkYQm3ybzjb6a8bt518x1s');
