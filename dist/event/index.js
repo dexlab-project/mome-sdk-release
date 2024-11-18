@@ -14,12 +14,5 @@ var __exportStar = (this && this.__exportStar) || function(m, exports) {
     for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports, p)) __createBinding(exports, m, p);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.PROGRAM_ID = exports.EVENT_AUTHORITY_SEED = exports.CURVE_SEED = exports.CONFIG_SEED = void 0;
-const web3_js_1 = require("@solana/web3.js");
-const MOME_PROGRAM_ID = process.env.MOME_PROGRAM_ID || 'MoMessZmfwm61SB433t6aDteuQ8ypCLEJQGf61A3MDx';
-exports.CONFIG_SEED = 'mome:global-context';
-exports.CURVE_SEED = 'mome:curve-account';
-exports.EVENT_AUTHORITY_SEED = '__event_authority';
-exports.PROGRAM_ID = new web3_js_1.PublicKey(MOME_PROGRAM_ID);
-__exportStar(require("./mome-idl"), exports);
+__exportStar(require("./listener"), exports);
 __exportStar(require("./types"), exports);

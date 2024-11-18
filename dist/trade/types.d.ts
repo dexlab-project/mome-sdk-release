@@ -1,8 +1,8 @@
 import BN from 'bn.js';
 import { Program, Wallet } from '@coral-xyz/anchor';
 import { Commitment, Keypair, PublicKey } from '@solana/web3.js';
-import { Mome } from '../program';
-import { ContractEnum, Token } from '../token';
+import { ContractEnum, Mome } from '../program';
+import { Token } from '../token';
 export type TradeType = 'buy' | 'sell';
 export type TradeParam = {
     amount: bigint;
