@@ -16,7 +16,7 @@ npm install @dexlab-project/mome-sdk
 ### Initialization
 
 * If you want to automatically generate an anchor-provider:
-    * `WALLET_PATH` is the path to your Solana CLI wallet (e.g., `~/.config/solana/id.json`).
+  * `WALLET_PATH` is the path to your Solana CLI wallet (e.g., `~/.config/solana/id.json`).
 
 ```typescript
 const sdk = MomeSDK.init(YOUR_RPC_URL, WALLET_PATH)
@@ -40,23 +40,23 @@ const sdk = new MomeSDK(provider)
 ```typescript
 const token = sdk.getToken('your-token-address')
 const result = await token.beginTrade(wallet)
-  .buy({
-    amount: 1_000_000n, // may be 0.001 SOL
-    slippageBps: 1_500,
-  })
-  .setComputeUnit({
-    computeUnitLimit: 200_000,
-    computeUnitPrice: 1_000,
-  })
-  .transaction({
-    blockhashCommitment: 'confirmed',
-  })
-  .send( // you can use `sendAndConfirm` and `simulate`
-    {
-      skipPreflight: false,
-      preflightCommitment: 'confirmed',
-      commitment: 'confirmed',
-    })
+        .buy({
+          amount: 1_000_000n, // may be 0.001 SOL
+          slippageBps: 1_500,
+        })
+        .setComputeUnit({
+          computeUnitLimit: 200_000,
+          computeUnitPrice: 1_000,
+        })
+        .transaction({
+          blockhashCommitment: 'confirmed',
+        })
+        .send( // you can use `sendAndConfirm` and `simulate`
+                {
+                  skipPreflight: false,
+                  preflightCommitment: 'confirmed',
+                  commitment: 'confirmed',
+                })
 ```
 
 ### Sell Transaction
@@ -64,20 +64,20 @@ const result = await token.beginTrade(wallet)
 ```typescript
 const token = sdk.getToken('your-token-address')
 const result = await token.beginTrade(wallet)
-  .sell({
-    amount: 10000000000n,
-    slippageBps: 1_500,
-  })
-  .setComputeUnitPrice(200_000n)
-  .transaction({
-    blockhashCommitment: 'confirmed',
-  })
-  .send( // you can use `sendAndConfirm` and `simulate`
-    {
-      skipPreflight: false,
-      preflightCommitment: 'confirmed',
-      commitment: 'confirmed',
-    })
+        .sell({
+          amount: 10000000000n,
+          slippageBps: 1_500,
+        })
+        .setComputeUnitPrice(200_000n)
+        .transaction({
+          blockhashCommitment: 'confirmed',
+        })
+        .send( // you can use `sendAndConfirm` and `simulate`
+                {
+                  skipPreflight: false,
+                  preflightCommitment: 'confirmed',
+                  commitment: 'confirmed',
+                })
 ```
 
 ### Parameter Descriptions
@@ -99,15 +99,43 @@ If you want to create Instruction and Transaction objects and send them separate
 
 ```typescript
 const buyTrade = token
-  .beginTrade()
-  .buy({
-    amount: 100_100_100_000_000n,
-    slippageBps: 1_500,
-  })
+        .beginTrade()
+        .buy({
+          amount: 100_100_100_000_000n,
+          slippageBps: 1_500,
+        })
 
 const ix = await buyTrade.getTradeInstruction()
 const tx = await buyTrade.getTransaction({ blockhashCommitment: 'confirmed' })
 ```
+
+### Event Handling
+
+The Mome SDK provides functionality for handling events.
+
+```typescript
+const sdk = MomeSDK.init(RPC_URL, defaultConfigPath)
+const option = {
+  commitment: 'confirmed',
+}
+const listener = sdk.createNewListener(option) // option is optional. Default is { commitment: 'confirmed' }
+listener.onEvent('CurveTradeEvent', (event) => {
+  console.log('event received')
+})
+
+process.on('SIGINT', () => {
+  listener.close()
+})
+```
+
+* The first argument of `listener.onEvent()` is the name of the event to subscribe to.
+* The second argument is the callback function to execute when the event occurs.
+* Event names:
+  * `CurveCreateEvent`: A token is created.
+  * `MigrateInitializeEvent`: Token migration is initialized.
+  * `MigrateCreateEvent`: A migration pool is created.
+  * `CurveTradeEvent`: A buy or sell transaction occurs.
+  * `CurveStatusEvent`: The status of a token is changed.
 
 ### Using the Mome API
 
@@ -121,14 +149,14 @@ const token = await momeApi.getToken('your-token-address')
 ```
 * listToken
   * parameters
-      * `page`: Page number (starting from 1)
-      * `size`: Page size (1 to 100)
-      * `sort`: Sorting criteria `createdAt | lastCommentedAt | marketCap`
-      * `order`: Sorting direction `asc | desc`
+    * `page`: Page number (starting from 1)
+    * `size`: Page size (1 to 100)
+    * `sort`: Sorting criteria `createdAt | lastCommentedAt | marketCap`
+    * `order`: Sorting direction `asc | desc`
   * response
     * TokenResponse
 * getToken
   * parameters
-      * `address`: Token address
+    * `address`: Token address
   * response
     * TokenResponse
