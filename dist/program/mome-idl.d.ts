@@ -1,5 +1,5 @@
 export type Mome = {
-    "version": "0.3.0";
+    "version": "0.4.0";
     "name": "mome";
     "instructions": [
         {
@@ -190,6 +190,12 @@ export type Mome = {
                     "isSigner": false;
                 },
                 {
+                    "name": "referralAccount";
+                    "isMut": true;
+                    "isSigner": false;
+                    "isOptional": true;
+                },
+                {
                     "name": "tokenProgram";
                     "isMut": false;
                     "isSigner": false;
@@ -261,6 +267,12 @@ export type Mome = {
                     "name": "feeAddress";
                     "isMut": true;
                     "isSigner": false;
+                },
+                {
+                    "name": "referralAccount";
+                    "isMut": true;
+                    "isSigner": false;
+                    "isOptional": true;
                 },
                 {
                     "name": "tokenProgram";
@@ -537,6 +549,189 @@ export type Mome = {
                     };
                 }
             ];
+        },
+        {
+            "name": "createReferralAccount";
+            "accounts": [
+                {
+                    "name": "referralAccount";
+                    "isMut": true;
+                    "isSigner": false;
+                },
+                {
+                    "name": "referralConfigAccount";
+                    "isMut": false;
+                    "isSigner": false;
+                },
+                {
+                    "name": "signer";
+                    "isMut": true;
+                    "isSigner": true;
+                },
+                {
+                    "name": "systemProgram";
+                    "isMut": false;
+                    "isSigner": false;
+                },
+                {
+                    "name": "eventAuthority";
+                    "isMut": false;
+                    "isSigner": false;
+                },
+                {
+                    "name": "program";
+                    "isMut": false;
+                    "isSigner": false;
+                }
+            ];
+            "args": [
+                {
+                    "name": "params";
+                    "type": {
+                        "defined": "ReferralParams";
+                    };
+                }
+            ];
+        },
+        {
+            "name": "updateReferralAccount";
+            "accounts": [
+                {
+                    "name": "referralAccount";
+                    "isMut": false;
+                    "isSigner": false;
+                },
+                {
+                    "name": "referralConfig";
+                    "isMut": false;
+                    "isSigner": false;
+                },
+                {
+                    "name": "signer";
+                    "isMut": true;
+                    "isSigner": true;
+                },
+                {
+                    "name": "systemProgram";
+                    "isMut": false;
+                    "isSigner": false;
+                },
+                {
+                    "name": "eventAuthority";
+                    "isMut": false;
+                    "isSigner": false;
+                },
+                {
+                    "name": "program";
+                    "isMut": false;
+                    "isSigner": false;
+                }
+            ];
+            "args": [
+                {
+                    "name": "params";
+                    "type": {
+                        "defined": "ReferralParams";
+                    };
+                }
+            ];
+        },
+        {
+            "name": "withdrawReferralAccount";
+            "accounts": [
+                {
+                    "name": "referralAccount";
+                    "isMut": true;
+                    "isSigner": false;
+                },
+                {
+                    "name": "referrer";
+                    "isMut": true;
+                    "isSigner": true;
+                },
+                {
+                    "name": "rent";
+                    "isMut": false;
+                    "isSigner": false;
+                },
+                {
+                    "name": "eventAuthority";
+                    "isMut": false;
+                    "isSigner": false;
+                },
+                {
+                    "name": "program";
+                    "isMut": false;
+                    "isSigner": false;
+                }
+            ];
+            "args": [];
+        },
+        {
+            "name": "initializeReferralConfig";
+            "accounts": [
+                {
+                    "name": "referralConfigAccount";
+                    "isMut": true;
+                    "isSigner": false;
+                },
+                {
+                    "name": "configAccount";
+                    "isMut": false;
+                    "isSigner": false;
+                },
+                {
+                    "name": "configAuthority";
+                    "isMut": true;
+                    "isSigner": true;
+                },
+                {
+                    "name": "rent";
+                    "isMut": false;
+                    "isSigner": false;
+                },
+                {
+                    "name": "systemProgram";
+                    "isMut": false;
+                    "isSigner": false;
+                }
+            ];
+            "args": [
+                {
+                    "name": "params";
+                    "type": {
+                        "defined": "ReferralConfigParams";
+                    };
+                }
+            ];
+        },
+        {
+            "name": "updateReferralConfig";
+            "accounts": [
+                {
+                    "name": "referralConfigAccount";
+                    "isMut": true;
+                    "isSigner": false;
+                },
+                {
+                    "name": "referralConfigAuthority";
+                    "isMut": true;
+                    "isSigner": true;
+                },
+                {
+                    "name": "systemProgram";
+                    "isMut": false;
+                    "isSigner": false;
+                }
+            ];
+            "args": [
+                {
+                    "name": "params";
+                    "type": {
+                        "defined": "ReferralConfigParams";
+                    };
+                }
+            ];
         }
     ];
     "accounts": [
@@ -687,6 +882,62 @@ export type Mome = {
             };
         },
         {
+            "name": "referralAccount";
+            "type": {
+                "kind": "struct";
+                "fields": [
+                    {
+                        "name": "referrer";
+                        "type": "publicKey";
+                    },
+                    {
+                        "name": "bump";
+                        "type": "u8";
+                    },
+                    {
+                        "name": "shareRatePercent";
+                        "type": "u8";
+                    },
+                    {
+                        "name": "createdAt";
+                        "type": "u64";
+                    },
+                    {
+                        "name": "isInitialized";
+                        "type": "bool";
+                    }
+                ];
+            };
+        },
+        {
+            "name": "referralConfig";
+            "type": {
+                "kind": "struct";
+                "fields": [
+                    {
+                        "name": "referralConfigAuthority";
+                        "type": "publicKey";
+                    },
+                    {
+                        "name": "creationFeeAddress";
+                        "type": "publicKey";
+                    },
+                    {
+                        "name": "creationFeeLamports";
+                        "type": "u64";
+                    },
+                    {
+                        "name": "bump";
+                        "type": "u8";
+                    },
+                    {
+                        "name": "isInitialized";
+                        "type": "bool";
+                    }
+                ];
+            };
+        },
+        {
             "name": "tokenSwap";
             "type": {
                 "kind": "struct";
@@ -806,6 +1057,28 @@ export type Mome = {
             };
         },
         {
+            "name": "ReferralConfigParams";
+            "type": {
+                "kind": "struct";
+                "fields": [
+                    {
+                        "name": "creationFeeAddress";
+                        "type": "publicKey";
+                    },
+                    {
+                        "name": "creationFeeLamports";
+                        "type": "u64";
+                    },
+                    {
+                        "name": "newAuthority";
+                        "type": {
+                            "option": "publicKey";
+                        };
+                    }
+                ];
+            };
+        },
+        {
             "name": "MomeConfigParams";
             "type": {
                 "kind": "struct";
@@ -915,6 +1188,22 @@ export type Mome = {
                         "type": {
                             "option": "string";
                         };
+                    }
+                ];
+            };
+        },
+        {
+            "name": "ReferralParams";
+            "type": {
+                "kind": "struct";
+                "fields": [
+                    {
+                        "name": "referrer";
+                        "type": "publicKey";
+                    },
+                    {
+                        "name": "shareRatePercent";
+                        "type": "u8";
                     }
                 ];
             };
@@ -1291,176 +1580,241 @@ export type Mome = {
     "errors": [
         {
             "code": 6000;
+            "name": "Unauthorized";
+            "msg": "Unauthorized";
+        },
+        {
+            "code": 6001;
+            "name": "InsufficientWithdrawableBalance";
+            "msg": "The withdrawable balance is below the minimum threshold of 0.1 SOL";
+        },
+        {
+            "code": 6002;
+            "name": "InvalidShareRate";
+            "msg": "Invalid share rate";
+        },
+        {
+            "code": 6003;
+            "name": "InvalidReferrerPda";
+            "msg": "Invalid referrer PDA";
+        },
+        {
+            "code": 6004;
+            "name": "InvalidReferrerOwner";
+            "msg": "Invalid referrer owner";
+        },
+        {
+            "code": 6005;
+            "name": "InvalidReferrer";
+            "msg": "Invalid referrer";
+        },
+        {
+            "code": 6006;
+            "name": "InvalidAuthority";
+            "msg": "Invalid authority";
+        },
+        {
+            "code": 6007;
+            "name": "InvalidFeeAddress";
+            "msg": "Invalid fee address";
+        },
+        {
+            "code": 6008;
+            "name": "InvalidCreationFee";
+            "msg": "Invalid creation fee";
+        },
+        {
+            "code": 6009;
+            "name": "InvalidShareRatePercent";
+            "msg": "Share rate percent must be less than or equal to 5";
+        },
+        {
+            "code": 6010;
+            "name": "AccountNotInitialized";
+            "msg": "Account not initialized";
+        },
+        {
+            "code": 6011;
+            "name": "AlreadyInitialized";
+            "msg": "Account already initialized";
+        },
+        {
+            "code": 6012;
+            "name": "InvalidPda";
+            "msg": "Invalid PDA";
+        },
+        {
+            "code": 6013;
             "name": "TradeThresholdMet";
             "msg": "Trade threshold met";
         },
         {
-            "code": 6001;
+            "code": 6014;
             "name": "EmptySupply";
             "msg": "Input account empty";
         },
         {
-            "code": 6002;
+            "code": 6015;
             "name": "SlippageExceeded";
             "msg": "Slippage Exceeded";
         },
         {
-            "code": 6003;
+            "code": 6016;
             "name": "InvalidTokenAddress";
             "msg": "Invalid token address";
         },
         {
-            "code": 6004;
+            "code": 6017;
             "name": "UnAcceptableCurveType";
             "msg": "Invalid curve type";
         },
         {
-            "code": 6005;
+            "code": 6018;
             "name": "BannerUrlTooLong";
             "msg": "Max banner url is 200 characters";
         },
         {
-            "code": 6006;
+            "code": 6019;
             "name": "BumpNotFound";
             "msg": "Bump not found";
         },
         {
-            "code": 6007;
+            "code": 6020;
             "name": "SwapAccountAlreadyExists";
             "msg": "Swap account already exists";
         },
         {
-            "code": 6008;
+            "code": 6021;
             "name": "InvalidSwapFeeAccount";
             "msg": "Invalid Swap fee account";
         },
         {
-            "code": 6009;
+            "code": 6022;
             "name": "UnAcceptableQuoteMint";
             "msg": "Unacceptable quote mint";
         },
         {
-            "code": 6010;
+            "code": 6023;
             "name": "InvalidCurveStatus";
             "msg": "Invalid curve status passed";
         },
         {
-            "code": 6011;
+            "code": 6024;
             "name": "NotEnoughFunds";
             "msg": "Not enough funds";
         },
         {
-            "code": 6012;
+            "code": 6025;
             "name": "InvalidConfigAccount";
             "msg": "Invalid Config Account";
         },
         {
-            "code": 6013;
+            "code": 6026;
             "name": "InvalidAmmProgramId";
             "msg": "Invalid AMM Program ID";
         },
         {
-            "code": 6014;
+            "code": 6027;
             "name": "MigrationCriteriaNotMet";
             "msg": "Migration criteria were not met.";
         },
         {
-            "code": 6015;
+            "code": 6028;
             "name": "InvalidCurve";
             "msg": "This curve can't be used for this trade";
         },
         {
-            "code": 6016;
+            "code": 6029;
             "name": "CalculationFailure";
             "msg": "Calculation failure";
         },
         {
-            "code": 6017;
+            "code": 6030;
             "name": "ConversionFailure";
             "msg": "Conversion failure";
         },
         {
-            "code": 6018;
+            "code": 6031;
             "name": "Overflow";
             "msg": "Overflow";
         },
         {
-            "code": 6019;
+            "code": 6032;
             "name": "DivideByZero";
             "msg": "Divide by zero";
         },
         {
-            "code": 6020;
+            "code": 6033;
             "name": "UnAcceptableTotalSupply";
             "msg": "Unacceptable total supply";
         },
         {
-            "code": 6021;
+            "code": 6034;
             "name": "InvalidTimestampConversion";
             "msg": "Invalid timestamp conversion";
         },
         {
-            "code": 6022;
+            "code": 6035;
             "name": "TokenSupplyOverflow";
             "msg": "Token supply has overflowed";
         },
         {
-            "code": 6023;
+            "code": 6036;
             "name": "ConfigNotInitialized";
             "msg": "Config not initialized";
         },
         {
-            "code": 6024;
+            "code": 6037;
             "name": "UnsupportedTradeType";
             "msg": "Unsupported trade type";
         },
         {
-            "code": 6025;
+            "code": 6038;
             "name": "InvalidAmount";
             "msg": "invalid amount";
         },
         {
-            "code": 6026;
+            "code": 6039;
             "name": "InvalidInitConfigAuthority";
             "msg": "init config authority must be signer";
         },
         {
-            "code": 6027;
+            "code": 6040;
             "name": "ConfigAlreadyInitialized";
             "msg": "config already initialized";
         },
         {
-            "code": 6028;
+            "code": 6041;
             "name": "InvalidParams";
             "msg": "invalid params";
         },
         {
-            "code": 6029;
+            "code": 6042;
             "name": "InvalidDecimals";
             "msg": "invalid decimals";
         },
         {
-            "code": 6030;
+            "code": 6043;
             "name": "ExceededMaxFeeBps";
             "msg": "exceeded max fee bps";
         },
         {
-            "code": 6031;
+            "code": 6044;
             "name": "InvalidSupportedDecimals";
             "msg": "min_supported_decimal_places must be less than or equal to max_supported_decimal_places";
         },
         {
-            "code": 6032;
+            "code": 6045;
             "name": "InvalidSupportedTotalSupply";
             "msg": "min_supported_token_supply must be less than or equal to max_supported_token_supply";
         },
         {
-            "code": 6033;
+            "code": 6046;
             "name": "InvalidCoefB";
             "msg": "coef_b must be greater than equal 20";
         },
         {
-            "code": 6034;
+            "code": 6047;
             "name": "CommonError";
             "msg": "Common error";
         }
