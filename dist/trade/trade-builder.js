@@ -63,6 +63,7 @@ class TradeBuilder {
                 curveTokenAccount,
                 configAccount: configAddress,
                 mint: this.token.pubkey,
+                referralAccount: null,
                 feeAddress: configAccountData.tradeFee,
                 tokenProgram: spl_token_1.TOKEN_PROGRAM_ID,
                 associatedTokenProgram: spl_token_1.ASSOCIATED_TOKEN_PROGRAM_ID,
